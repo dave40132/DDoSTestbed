@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  botnet1:
+    build:
+      context: ./attacker
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    networks:
+      testbed:
+        ipv4_address: 10.10.10.5
+  
+  botnet2:
+    build:
+      context: ./attacker
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    networks:
+      testbed:
+        ipv4_address: 10.10.10.6
+
+  botnet3:
+    build:
+      context: ./attacker
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    networks:
+      testbed:
+        ipv4_address: 10.10.10.7
+
+  botnet4:
+    build:
+      context: ./attacker
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    networks:
+      testbed:
+        ipv4_address: 10.10.10.8
+
+  target:
+    build:
+      context: ./target
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    networks:
+      testbed:
+        ipv4_address: 10.10.10.9
+
+networks:
+  testbed:
+    driver: bridge
+    name: inflectNetwork
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
+          gateway: 10.10.10.1
+    driver_opts:
+      com.docker.network.bridge.name: inflect
